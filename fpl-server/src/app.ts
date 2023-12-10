@@ -5,7 +5,7 @@ import cors from "cors";
 import { FPL_PLAYER_URL } from "./common/url";
 import { getAllPlayers } from "./api/getAllPlayers";
 import { getManager } from "./api/getManager";
-import { getTopAssisters, getTopPointers, getTopScorers } from "./api/getTopPlayers";
+import { getTopAssisters, getTopBonusPointers, getTopPointers, getTopScorers } from "./api/getTopPlayers";
 
 const app = express();
 const port = 4000;
@@ -68,10 +68,22 @@ app.get("/top-assisters", async (req: Request, res: Response) => {
     res.status(500).send("Error fetching data");
   }
 });
-
-app.get("/manager", async (req: Request, res: Response) => {
+app.get("/top-bonus-pointers", async (req: Request, res: Response) => {
   try {
-    const manager = await getManager(3504103);
+    const players = await getTopBonusPointers();
+    console.log(players);
+    // 선수 데이터를 응답으로 보냅니다.
+    res.json(players);
+  } catch (error) {
+    console.error("Error fetching data from FPL:", error);
+    res.status(500).send("Error fetching data");
+  }
+});
+
+app.get("/manager/:id", async (req: Request, res: Response) => {
+  try {
+    const managerId: number = parseFloat(req.params.id);
+    const manager = await getManager(managerId);
     console.log(manager);
     // 선수 데이터를 응답으로 보냅니다.
     res.json(manager);

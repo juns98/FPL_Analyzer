@@ -7,14 +7,18 @@ function Home() {
   const [topPointer, setTopPointer] = useState([]);
   const [topScorer, setTopScorer] = useState([]);
   const [topAssister, setTopAssister] = useState([]);
+  const [topBonus, setTopBonus] = useState([]);
 
   const getTopData = async () => {
     const pointers = await axios.get("http://localhost:4000/top-pointers");
     const scorers = await axios.get("http://localhost:4000/top-scorers");
     const assisters = await axios.get("http://localhost:4000/top-assisters");
+    const bonus = await axios.get("http://localhost:4000/top-bonus-pointers");
+    console.log(pointers.data);
     setTopPointer(pointers.data);
     setTopScorer(scorers.data);
     setTopAssister(assisters.data);
+    setTopBonus(bonus.data);
   };
   useEffect(() => {
     getTopData();
@@ -23,7 +27,7 @@ function Home() {
     <Container>
       <Navbar />
       <h1>Welcome to the FPL Helper</h1>
-      <p>Hello Octapod</p>
+      <p>Hello People</p>
 
       <BoxContainer>
         <Box>
@@ -62,6 +66,18 @@ function Home() {
               })
             : null}
         </Box>
+        <Box>
+          <h3>Top Bonus</h3>
+          {topBonus.length > 0
+            ? topBonus.map((data: any) => {
+                return (
+                  <p>
+                    {data.first_name} {data.second_name} ({data.team_code}) - {data.bonus}
+                  </p>
+                );
+              })
+            : null}
+        </Box>
       </BoxContainer>
     </Container>
   );
@@ -80,7 +96,7 @@ const BoxContainer = styled.div`
 `;
 
 const Box = styled.div`
-  width: 30%;
+  width: auto;
   background-color: #333;
   color: white;
   margin-bottom: 1rem;

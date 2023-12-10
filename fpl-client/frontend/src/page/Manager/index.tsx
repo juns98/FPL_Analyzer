@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Navbar from "../../components/Navbar";
+import Button from "../../components/Button";
 
 interface Manager {
   name: string;
@@ -16,10 +17,12 @@ interface Manager {
 }
 
 function Manager() {
+  const [managerId, setManagerId] = useState<number>(0);
   const [manager, setManager] = useState<Manager | null>(null);
 
   const getManagerData = async () => {
-    const response: any = await axios.get("http://localhost:4000/manager");
+    if (!managerId) return;
+    const response: any = await axios.get(`http://localhost:4000/manager/${managerId}`);
     setManager(response.data);
   };
 
@@ -31,7 +34,11 @@ function Manager() {
     <Container>
       <Navbar />
       <Title>Manager</Title>
-      <Subtitle>Worst Manager!</Subtitle>
+      <Subtitle>
+        Enter Manager Id:
+        <input type="number" onChange={(e) => setManagerId(parseFloat(e.target.value))} />
+        <Button label="Submit" onClick={getManagerData} />
+      </Subtitle>
       <ManagerCard>
         <ManagerDetail>Manager Name: {manager ? manager.name : "null"}</ManagerDetail>
         <ManagerDetail>Player First Name: {manager ? manager.player_first_name : "null"}</ManagerDetail>
