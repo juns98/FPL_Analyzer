@@ -1,6 +1,9 @@
 export const FPL_PLAYER_URL = "https://fantasy.premierleague.com/api/bootstrap-static/";
 // Example : https://fantasy.premierleague.com/api/bootstrap-static/
 
+export const FPL_TEAM_URL = "https://fantasy.premierleague.com/api/bootstrap-static/";
+// Example : https://fantasy.premierleague.com/api/bootstrap-static/
+
 export const FPL_FIXTURES_URL = "https://fantasy.premierleague.com/api/fixtures/";
 // Example : https://fantasy.premierleague.com/api/fixtures/?event={event_id}
 

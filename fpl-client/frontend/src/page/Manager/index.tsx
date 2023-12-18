@@ -58,7 +58,6 @@ export default Manager;
 const Container = styled.div`
   text-align: center;
   padding: 20px;
-  background-color: #f5f5f5;
 `;
 
 const Title = styled.h1`

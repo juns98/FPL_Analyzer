@@ -1,13 +1,27 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
+
+// Define a type for the props
+type NavLinksProps = {
+  isNavExpanded: boolean;
+};
 
 // Navbar component
 function Navbar() {
+  const [isNavExpanded, setIsNavExpanded] = useState(false);
+
   return (
     <StyledNavbar>
       <NavbarContainer>
-        <Logo>FPL Helper</Logo>
-        <NavLinks>
+        <Logo
+          onClick={() => {
+            window.location.href = "/";
+          }}
+        >
+          FPL Helper
+        </Logo>
+        <MenuIcon onClick={() => setIsNavExpanded(!isNavExpanded)}>☰</MenuIcon>
+        <NavLinks isNavExpanded={isNavExpanded}>
           <NavLink>
             <Link href="/">Home</Link>
           </NavLink>
@@ -16,6 +30,9 @@ function Navbar() {
           </NavLink>
           <NavLink>
             <Link href="/player">Player</Link>
+          </NavLink>
+          <NavLink>
+            <Link href="/team">Team</Link>
           </NavLink>
           <NavLink>
             <Link href="/manager">Manager</Link>
@@ -28,13 +45,11 @@ function Navbar() {
 
 export default Navbar;
 
-// Styled components
 const StyledNavbar = styled.nav`
-  background-color: #333;
-  color: white;
+  background-color: white;
+  color: #333;
   padding: 0.5rem 1rem;
   display: flex;
-  justify-content: space-between;
   align-items: center;
 `;
 
@@ -49,19 +64,45 @@ const Logo = styled.div`
   font-weight: bold;
 `;
 
-const NavLinks = styled.ul`
+const MenuIcon = styled.div`
+  display: none;
+  font-size: 2rem;
+  cursor: pointer;
+
+  @media (max-width: 768px) {
+    display: block;
+  }
+`;
+
+const NavLinks = styled.ul<NavLinksProps>`
   list-style: none;
   display: flex;
   margin: 0;
+
+  @media (max-width: 768px) {
+    display: ${({ isNavExpanded }) => (isNavExpanded ? "block" : "none")};
+    position: absolute;
+    top: 60px;
+    left: 0;
+    right: 0;
+    background-color: #333;
+    padding: 1rem;
+    border-top: 2px solid #4caf50;
+  }
 `;
 
 const NavLink = styled.li`
   padding: 0 15px;
+
+  @media (max-width: 768px) {
+    padding: 10px 0;
+  }
 `;
 
 const Link = styled.a`
-  color: white;
+  color: black;
   text-decoration: none;
+
   &:hover {
     color: #4caf50;
   }

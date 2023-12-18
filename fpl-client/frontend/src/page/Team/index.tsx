@@ -1,11 +1,11 @@
 import Navbar from "../../components/Navbar";
 import styled from "styled-components";
 
-function About() {
+function Team() {
   return (
     <Container>
       <Navbar />
-      <Title>About</Title>
+      <Title>Team</Title>
       <InfoBox>
         <InfoText>hello</InfoText>
       </InfoBox>
@@ -13,7 +13,7 @@ function About() {
   );
 }
 
-export default About;
+export default Team;
 
 const Container = styled.div`
   text-align: center;

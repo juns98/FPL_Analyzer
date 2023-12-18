@@ -62,3 +62,33 @@ export const getTopBonusPointers = async () => {
     throw error;
   }
 };
+
+export const getTopTransfersIn = async () => {
+  try {
+    const response = await axios.get(FPL_PLAYER_URL);
+    // console.log(response.data);
+    // 'elements' 필드에 선수 데이터가 포함되어 있습니다.
+    const players = response.data.elements;
+    // console.log(players.sort((a: any, b: any) => b.total_points - a.total_points).slice(0, 10));
+    // 선수 데이터를 응답으로 보냅니다.
+    return players.sort((a: any, b: any) => b.transfers_in_event - a.transfers_in_event).slice(0, 10);
+  } catch (error) {
+    console.error("Error fetching data from FPL:", error);
+    throw error;
+  }
+};
+
+export const getTopTransfersOut = async () => {
+  try {
+    const response = await axios.get(FPL_PLAYER_URL);
+    // console.log(response.data);
+    // 'elements' 필드에 선수 데이터가 포함되어 있습니다.
+    const players = response.data.elements;
+    // console.log(players.sort((a: any, b: any) => b.total_points - a.total_points).slice(0, 10));
+    // 선수 데이터를 응답으로 보냅니다.
+    return players.sort((a: any, b: any) => b.transfers_out_event - a.transfers_out_event).slice(0, 10);
+  } catch (error) {
+    console.error("Error fetching data from FPL:", error);
+    throw error;
+  }
+};
