@@ -20,7 +20,7 @@ const port = 4000;
 
 app.use(
   cors({
-    origin: "http://localhost:3000", // Allow only this origin to access your API
+    origin: ["http://localhost:3000", "http://34.82.88.75:3000"], // Allow only this origin to access your API
     optionsSuccessStatus: 200, // For legacy browser support
     credentials: true, // Enable cookies
   })
