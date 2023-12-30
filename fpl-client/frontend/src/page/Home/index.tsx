@@ -12,11 +12,12 @@ function Home() {
   const [teamInfo, setTeamInfo] = useState([]);
 
   const getTopData = async () => {
-    const pointers = await axios.get("http://localhost:4000/top-players/pointers");
-    const scorers = await axios.get("http://localhost:4000/top-players/scorers");
-    const assisters = await axios.get("http://localhost:4000/top-players/assisters");
-    const bonus = await axios.get("http://localhost:4000/top-players/bonus-pointers");
-    const teamInfo = await axios.get("http://localhost:4000/team-info");
+    const serverUrl = process.env.REACT_APP_SERVER_ADDRESS;
+    const pointers = await axios.get(`http://${serverUrl}/top-players/pointers`);
+    const scorers = await axios.get(`http://${serverUrl}/top-players/scorers`);
+    const assisters = await axios.get(`http://${serverUrl}/top-players/assisters`);
+    const bonus = await axios.get(`http://${serverUrl}/top-players/bonus-pointers`);
+    const teamInfo = await axios.get(`http://${serverUrl}/team-info`);
 
     console.log(teamInfo.data);
     console.log(scorers.data);

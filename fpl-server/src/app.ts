@@ -16,6 +16,7 @@ import { getTeamInfo } from "./api/getTeamInfo";
 import { getFactsPlayer, getFactsTeam } from "./api/getFunFacts";
 
 const app = express();
+
 const port = 4000;
 
 app.use(

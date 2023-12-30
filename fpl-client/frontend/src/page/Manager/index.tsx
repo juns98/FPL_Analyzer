@@ -22,7 +22,8 @@ function Manager() {
 
   const getManagerData = async () => {
     if (!managerId) return;
-    const response: any = await axios.get(`http://localhost:4000/manager/${managerId}`);
+    const serverUrl = process.env.REACT_APP_SERVER_ADDRESS;
+    const response: any = await axios.get(`http://${serverUrl}/manager/${managerId}`);
     setManager(response.data);
   };
 

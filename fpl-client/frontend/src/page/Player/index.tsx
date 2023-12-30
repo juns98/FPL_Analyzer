@@ -26,19 +26,21 @@ function Player() {
   ];
 
   const getAnswer = async () => {
-    const teamInfo = await axios.get("http://localhost:4000/team-info");
+    const serverUrl = process.env.REACT_APP_SERVER_ADDRESS;
+    const teamInfo = await axios.get(`http://${serverUrl}/team-info`);
     setTeamInfo(teamInfo.data);
     if (questionIndex === 0) {
-      const response: any = await axios.get(`http://localhost:4000/top-players/transfer-in`);
+      const response: any = await axios.get(`http://${serverUrl}/top-players/transfer-in`);
       setAnswers(response.data);
     } else if (questionIndex === 1) {
-      const response: any = await axios.get(`http://localhost:4000/top-players/transfer-out`);
+      const response: any = await axios.get(`http://${serverUrl}/top-players/transfer-out`);
       setAnswers(response.data);
     }
   };
 
   const getPlayerFacts = async () => {
-    const response: any = await axios.get(`http://localhost:4000/facts/players`);
+    const serverUrl = process.env.REACT_APP_SERVER_ADDRESS;
+    const response: any = await axios.get(`http://${serverUrl}/facts/players`);
     setPlayerFacts(response.data);
   };
 
