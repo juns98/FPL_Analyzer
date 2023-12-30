@@ -12,7 +12,7 @@ import {
   getTopTransfersIn,
   getTopTransfersOut,
 } from "./api/getTopPlayers";
-import { getTeamInfo } from "./api/getTeamInfo";
+import { getTeamInfo, getTeamStanding } from "./api/getTeamInfo";
 import { getFactsPlayer, getFactsTeam } from "./api/getFunFacts";
 
 const app = express();
@@ -97,6 +97,17 @@ app.get("/top-players/:option", async (req: Request, res: Response) => {
 app.get("/team-info", async (req: Request, res: Response) => {
   try {
     const teams = await getTeamInfo();
+    // console.log(teams);
+    // 선수 데이터를 응답으로 보냅니다.
+    res.json(teams);
+  } catch (error) {
+    console.error("Error fetching data from FPL:", error);
+    res.status(500).send("Error fetching data");
+  }
+});
+app.get("/team-standing", async (req: Request, res: Response) => {
+  try {
+    const teams = await getTeamStanding();
     // console.log(teams);
     // 선수 데이터를 응답으로 보냅니다.
     res.json(teams);

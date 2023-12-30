@@ -106,21 +106,8 @@ function Player() {
         ))}
       </ReactModal>
 
-      {/* <QuestionLists>
-        {questionLists.map((question, index) => (
-          <QuestionList
-            key={index}
-            onClick={() => {
-              setQuestionIndex(index);
-              console.log(index);
-            }}
-          >
-            {question}
-          </QuestionList>
-        ))}
-      </QuestionLists> */}
-
       <Answer>
+        <Target>{questionLists[questionIndex]}</Target>
         <AnswerHeader>
           {answerHeaders[questionIndex].map((header, index) => (
             <AnswerComponent key={index}>{header}</AnswerComponent>
@@ -168,7 +155,7 @@ const InfoBox = styled.div`
   background-color: #98fb98;
   color: black;
   padding: 20px;
-  margin: 20px auto; // Center the box
+  margin: 10px auto; // Center the box
   border-radius: 8px; // Softer border radius
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); // Adds depth with a shadow
   position: relative; // Needed for the tooltip arrow
@@ -193,6 +180,12 @@ const InfoText = styled.h2`
 `;
 
 const Question = styled(Button)`
+  margin-bottom: 20px;
+  // add shadow
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 1);
+`;
+
+const Target = styled.h2`
   margin-bottom: 20px;
 `;
 
@@ -238,4 +231,7 @@ const AnswerData = styled.div`
 
 const AnswerComponent = styled.div`
   width: 25%;
+  word-wrap: break-word; // Allows long words to be able to be broken and wrap onto the next line
+  overflow-wrap: break-word; // Ensure long words break and wrap to the next line
+  white-space: normal; // Allow wrapping of text in case of long strings without spaces
 `;

@@ -33,3 +33,5 @@ export const FPL_DREAM_TEAM_URL = "https://fantasy.premierleague.com/api/dream-t
 // Example : https://fantasy.premierleague.com/api/dream-team/{event_id}/
 
 export const FPL_SET_PIECE_NOTES_URL = "https://fantasy.premierleague.com/api/set-piece-notes/";
+
+export const FOOTBALL_DATA_LEAGUE_TABLE_URL = "https://api.football-data.org/v4/competitions/PL/standings";

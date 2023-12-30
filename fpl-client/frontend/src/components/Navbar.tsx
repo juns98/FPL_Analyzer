@@ -26,9 +26,9 @@ function Navbar() {
           <NavLink>
             <Link href="/">Home</Link>
           </NavLink>
-          <NavLink>
+          {/* <NavLink>
             <Link href="/about">About</Link>
-          </NavLink>
+          </NavLink> */}
           <NavLink>
             <Link href="/player">Player</Link>
           </NavLink>
