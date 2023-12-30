@@ -30,7 +30,6 @@ const Application = styled.div`
   font-weight: 400;
   width: 100%; /* Allows fluid width on smaller screens */
   margin: 0 auto; /* Center the content */
-  padding: 1rem; /* Adequate padding */
 
   /* Adjust font size for different screen sizes */
   font-size: 0.9rem; /* Default font size for small screens */
