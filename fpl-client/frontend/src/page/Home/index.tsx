@@ -98,32 +98,36 @@ function Home() {
           onClick={() => {
             setPosition("forward");
           }}
+          data-short-name="FWD" // Short name
         >
-          Forward
+          <span>Forward</span>
         </PositionButton>
         <PositionButton
           selected={position === "midfielder"}
           onClick={() => {
             setPosition("midfielder");
           }}
+          data-short-name="MID" // Short name
         >
-          Midfielder
+          <span>Midfielder</span>
         </PositionButton>
         <PositionButton
           selected={position === "defender"}
           onClick={() => {
             setPosition("defender");
           }}
+          data-short-name="DEF" // Short name
         >
-          Defender
+          <span>Defender</span>
         </PositionButton>
         <PositionButton
           selected={position === "goalkeeper"}
           onClick={() => {
             setPosition("goalkeeper");
           }}
+          data-short-name="GK" // Short name
         >
-          GoalKeeper
+          <span>GoalKeeper</span>
         </PositionButton>
       </ButtonContainer>
       <BoxContainer>
@@ -182,8 +186,26 @@ const ButtonContainer = styled.div`
 `;
 
 const PositionButton = styled(Button)<CustomButtonProps>`
-  width: 18%;
   background-color: ${(props) => (props.selected ? colors.buttonHover : colors.primary)};
+  text-align: center;
+  width: 18%;
+
+  // Add media query for small screens
+  @media (max-width: 1078px) {
+    font-size: 0.8;
+    padding: 5px 10px;
+
+    // Using a pseudo-element to display the short name
+    &:after {
+      content: attr(data-short-name); // Use the short name as content
+      display: block;
+    }
+
+    // Hide the original text
+    > span {
+      display: none;
+    }
+  }
 `;
 
 const LeftData = styled.div`

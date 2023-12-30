@@ -22,6 +22,7 @@ function Navbar() {
         </Logo>
         <MenuIcon onClick={() => setIsNavExpanded(!isNavExpanded)}>☰</MenuIcon>
         <NavLinks isNavExpanded={isNavExpanded}>
+          <MenuIcon onClick={() => setIsNavExpanded(!isNavExpanded)}>☰</MenuIcon>
           <NavLink>
             <Link href="/">Home</Link>
           </NavLink>
@@ -68,6 +69,8 @@ const MenuIcon = styled.div`
   display: none;
   font-size: 2rem;
   cursor: pointer;
+  text-align: right;
+  margin-right: 10px;
 
   @media (max-width: 768px) {
     display: block;
@@ -82,17 +85,17 @@ const NavLinks = styled.ul<NavLinksProps>`
   @media (max-width: 768px) {
     display: ${({ isNavExpanded }) => (isNavExpanded ? "block" : "none")};
     position: absolute;
-    top: 60px;
+    top: 40px;
     left: 0;
     right: 0;
-    background-color: #333;
+    background-color: white;
     padding: 1rem;
-    border-top: 2px solid #4caf50;
   }
 `;
 
 const NavLink = styled.li`
   padding: 0 15px;
+  margin-left: 10px;
 
   @media (max-width: 768px) {
     padding: 10px 0;

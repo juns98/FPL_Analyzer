@@ -3,6 +3,10 @@ import Navbar from "../../components/Navbar";
 import styled, { keyframes } from "styled-components";
 import axios from "axios";
 import { getTeamNameById } from "../../utils/getTeamNameById";
+import ReactModal from "react-modal";
+import Button from "../../components/Button";
+
+ReactModal.setAppElement("#root"); // Assuming your root element has the ID 'root'
 
 function Player() {
   const [playerFacts, setPlayerFacts] = useState<Array<string>>([]);
@@ -10,6 +14,7 @@ function Player() {
   const [questionIndex, setQuestionIndex] = useState(0);
   const [answers, setAnswers] = useState<Array<string>>([]);
   const [teamInfo, setTeamInfo] = useState([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const questionLists = [
     "Top Transfer in this Week",
@@ -81,8 +86,27 @@ function Player() {
       <InfoBox>
         {playerFacts.length > 0 && <InfoText key={currentFactIndex}>{playerFacts[currentFactIndex]}</InfoText>}
       </InfoBox>
-      <Question>What would you like to know?</Question>
-      <QuestionLists>
+      <Question onClick={() => setIsModalOpen(true)}>What would you like to know?</Question>
+
+      <ReactModal
+        isOpen={isModalOpen}
+        onRequestClose={() => setIsModalOpen(false)}
+        style={customStyles} // Optional: Custom styles
+      >
+        {questionLists.map((question, index) => (
+          <QuestionList
+            key={index}
+            onClick={() => {
+              setQuestionIndex(index);
+              setIsModalOpen(false);
+            }}
+          >
+            {question}
+          </QuestionList>
+        ))}
+      </ReactModal>
+
+      {/* <QuestionLists>
         {questionLists.map((question, index) => (
           <QuestionList
             key={index}
@@ -94,7 +118,7 @@ function Player() {
             {question}
           </QuestionList>
         ))}
-      </QuestionLists>
+      </QuestionLists> */}
 
       <Answer>
         <AnswerHeader>
@@ -119,6 +143,26 @@ const Container = styled.div`
 const Title = styled.h1`
   color: #333;
 `;
+
+const customStyles = {
+  content: {
+    top: "50%",
+    left: "50%",
+    right: "auto",
+    bottom: "auto",
+    marginRight: "-50%",
+    transform: "translate(-50%, -50%)",
+    maxWidth: "500px",
+    width: "100%",
+    padding: "20px",
+    borderRadius: "10px",
+    backgroundColor: "rgba(0,0,0,0)", // transparent
+    border: "none",
+  },
+  overlay: {
+    backgroundColor: "rgba(0, 0, 0, 0.7)",
+  },
+};
 
 const InfoBox = styled.div`
   background-color: #98fb98;
@@ -148,41 +192,15 @@ const InfoText = styled.h2`
   line-height: 1.4; // Better line spacing
 `;
 
-const Question = styled.h2`
-  color: #777;
+const Question = styled(Button)`
   margin-bottom: 20px;
-`;
-
-const QuestionLists = styled.div`
-  display: flex;
-  overflow-x: auto; // Enable horizontal scrolling
-  white-space: nowrap; // Keep items in a single line
-  max-width: 600px;
-  margin: 20px auto;
-  padding-bottom: 20px; // Add padding to avoid cutting off during scroll
-
-  &::-webkit-scrollbar {
-    height: 8px; // Custom scrollbar height
-  }
-
-  &::-webkit-scrollbar-track {
-    background: #f1f1f1; // Track color
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background: #888; // Scrollbar color
-  }
-
-  &::-webkit-scrollbar-thumb:hover {
-    background: #555; // Scrollbar color on hover
-  }
 `;
 
 const QuestionList = styled.div`
   background-color: #2c3e50;
   color: white;
   padding: 1.5rem;
-  margin: 0 10px; // Spacing between items
+  margin: 10px 10px; // Spacing between items
   flex: 0 0 auto; // Flex item does not grow or shrink
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);

@@ -26,7 +26,7 @@ function App() {
 export default App;
 
 const Application = styled.div`
-  font-family: "RobotoMono";
+  font-family: "Montserrat";
   font-weight: 400;
   width: 100%; /* Allows fluid width on smaller screens */
   margin: 0 auto; /* Center the content */
