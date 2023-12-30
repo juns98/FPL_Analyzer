@@ -38,7 +38,7 @@ function Manager() {
       <Subtitle>
         Enter Manager Id:
         <input type="number" onChange={(e) => setManagerId(parseFloat(e.target.value))} />
-        <Button label="Submit" onClick={getManagerData} />
+        <Button onClick={getManagerData}>Submit</Button>
       </Subtitle>
       <ManagerCard>
         <ManagerDetail>Manager Name: {manager ? manager.name : "null"}</ManagerDetail>

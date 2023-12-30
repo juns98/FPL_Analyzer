@@ -1,8 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, ButtonHTMLAttributes } from "react";
 import styled from "styled-components";
 import Navbar from "../../components/Navbar";
 import axios from "axios";
 import { getTeamNameById } from "../../utils/getTeamNameById";
+import Button from "../../components/Button";
+import colors from "../../assets/colors/colors";
+
+interface PositionButtonProps {
+  selected: boolean;
+}
+interface CustomButtonProps extends ButtonHTMLAttributes<HTMLButtonElement>, PositionButtonProps {}
 
 function Home() {
   const [topPointer, setTopPointer] = useState([]);
@@ -10,13 +17,30 @@ function Home() {
   const [topAssister, setTopAssister] = useState([]);
   const [topBonus, setTopBonus] = useState([]);
   const [teamInfo, setTeamInfo] = useState([]);
+  const [position, setPosition] = useState("" as string);
 
   const getTopData = async () => {
     const serverUrl = process.env.REACT_APP_SERVER_ADDRESS;
-    const pointers = await axios.get(`http://${serverUrl}/top-players/pointers`);
-    const scorers = await axios.get(`http://${serverUrl}/top-players/scorers`);
-    const assisters = await axios.get(`http://${serverUrl}/top-players/assisters`);
-    const bonus = await axios.get(`http://${serverUrl}/top-players/bonus-pointers`);
+    const pointers = await axios.get(`http://${serverUrl}/top-players/pointers`, {
+      params: {
+        position: position,
+      },
+    });
+    const scorers = await axios.get(`http://${serverUrl}/top-players/scorers`, {
+      params: {
+        position: position,
+      },
+    });
+    const assisters = await axios.get(`http://${serverUrl}/top-players/assisters`, {
+      params: {
+        position: position,
+      },
+    });
+    const bonus = await axios.get(`http://${serverUrl}/top-players/bonus-pointers`, {
+      params: {
+        position: position,
+      },
+    });
     const teamInfo = await axios.get(`http://${serverUrl}/team-info`);
 
     console.log(teamInfo.data);
@@ -31,7 +55,7 @@ function Home() {
 
   useEffect(() => {
     getTopData();
-  }, []);
+  }, [position]);
 
   const getName = (data: any) => {
     if (data.first_name.length + data.second_name.length > 15) {
@@ -52,6 +76,7 @@ function Home() {
       </DataContainer>
     );
   };
+
   return (
     <Container>
       <Navbar />
@@ -59,7 +84,48 @@ function Home() {
         <h1>Welcome to the FPL Helper</h1>
         <p>Hello People</p>
       </Header>
-
+      <ButtonContainer>
+        <PositionButton
+          selected={position === ""}
+          onClick={() => {
+            setPosition("");
+          }}
+        >
+          All
+        </PositionButton>
+        <PositionButton
+          selected={position === "forward"}
+          onClick={() => {
+            setPosition("forward");
+          }}
+        >
+          Forward
+        </PositionButton>
+        <PositionButton
+          selected={position === "midfielder"}
+          onClick={() => {
+            setPosition("midfielder");
+          }}
+        >
+          Midfielder
+        </PositionButton>
+        <PositionButton
+          selected={position === "defender"}
+          onClick={() => {
+            setPosition("defender");
+          }}
+        >
+          Defender
+        </PositionButton>
+        <PositionButton
+          selected={position === "goalkeeper"}
+          onClick={() => {
+            setPosition("goalkeeper");
+          }}
+        >
+          GoalKeeper
+        </PositionButton>
+      </ButtonContainer>
       <BoxContainer>
         <Box>
           <h3>Top Pointers</h3>
@@ -109,6 +175,17 @@ const DataContainer = styled.div`
   justify-content: space-between;
 `;
 
+const ButtonContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+`;
+
+const PositionButton = styled(Button)<CustomButtonProps>`
+  width: 18%;
+  background-color: ${(props) => (props.selected ? colors.buttonHover : colors.primary)};
+`;
+
 const LeftData = styled.div`
   display: flex;
 `;
@@ -142,8 +219,8 @@ const BoxContainer = styled.div`
 
 const Box = styled.div`
   width: calc(100% / 2 - 20px); // Responsive width for 2 boxes per row
-  background-color: #2c3e50; // A more subtle color
-  color: #ecf0f1; // A light color for text to enhance readability
+  background-color: ${colors.primary}; // A more subtle color: ;
+  color: ${colors.boxText}; // A light color for text to enhance readability
   margin: 10px; // Uniform margin for spacing
   padding: 1.5rem; // Increased padding for better spacing
   box-sizing: border-box; // Keeps padding within the box width
@@ -158,7 +235,7 @@ const Box = styled.div`
 
   h3 {
     margin-top: 0;
-    color: #f39c12; // A contrasting color for headings
+    color: ${colors.secondary}; // A contrasting color for headings
   }
 
   p {

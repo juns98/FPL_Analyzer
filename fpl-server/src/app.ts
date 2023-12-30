@@ -47,31 +47,46 @@ app.get("/players", async (req: Request, res: Response) => {
 app.get("/top-players/:option", async (req: Request, res: Response) => {
   try {
     const option: string = req.params.option;
-    const position: string | undefined = (req.query.position)?.toString();
+    const position: string | undefined = req.query.position?.toString();
+    let players;
     if (option === "pointers") {
-      let players;
       if (!position) {
-         players = await getTopPointers();
+        players = await getTopPointers();
       } else {
-         players = await getTopPointers(position);
+        players = await getTopPointers(position);
       }
-      return res.json(players);
     } else if (option === "scorers") {
-      const players = await getTopScorers();
-      return res.json(players);
+      if (!position) {
+        players = await getTopScorers();
+      } else {
+        players = await getTopScorers(position);
+      }
     } else if (option === "assisters") {
-      const players = await getTopAssisters();
-      return res.json(players);
+      if (!position) {
+        players = await getTopAssisters();
+      } else {
+        players = await getTopAssisters(position);
+      }
     } else if (option === "bonus-pointers") {
-      const players = await getTopBonusPointers();
-      return res.json(players);
+      if (!position) {
+        players = await getTopBonusPointers();
+      } else {
+        players = await getTopBonusPointers(position);
+      }
     } else if (option === "transfer-in") {
-      const players = await getTopTransfersIn();
-      return res.json(players);
+      if (!position) {
+        players = await getTopTransfersIn();
+      } else {
+        players = await getTopTransfersIn(position);
+      }
     } else if (option === "transfer-out") {
-      const players = await getTopTransfersOut();
-      return res.json(players);
+      if (!position) {
+        players = await getTopTransfersOut();
+      } else {
+        players = await getTopTransfersOut(position);
+      }
     }
+    return res.json(players);
   } catch (error) {
     console.error("Error fetching data from FPL:", error);
     res.status(500).send("Error fetching data");

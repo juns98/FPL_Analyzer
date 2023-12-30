@@ -12,7 +12,15 @@ export const getTopPointers = async (position?: string) => {
     if (!position) {
       return players.sort((a: any, b: any) => b.total_points - a.total_points).slice(0, 10);
     } else {
-  
+      if (position === "forward") position = "4";
+      else if (position === "midfielder") position = "3";
+      else if (position === "defender") position = "2";
+      else if (position === "goalkeeper") position = "1";
+      else position = "0";
+      return players
+        .filter((player: any) => player.element_type === parseInt(position as string))
+        .sort((a: any, b: any) => b.total_points - a.total_points)
+        .slice(0, 10);
     }
   } catch (error) {
     console.error("Error fetching data from FPL:", error);
@@ -20,7 +28,7 @@ export const getTopPointers = async (position?: string) => {
   }
 };
 
-export const getTopScorers = async () => {
+export const getTopScorers = async (position?: string) => {
   try {
     const response = await axios.get(FPL_PLAYER_URL);
     // console.log(response.data);
@@ -28,7 +36,19 @@ export const getTopScorers = async () => {
     const players = response.data.elements;
     // console.log(players.sort((a: any, b: any) => b.total_points - a.total_points).slice(0, 10));
     // 선수 데이터를 응답으로 보냅니다.
-    return players.sort((a: any, b: any) => b.goals_scored - a.goals_scored).slice(0, 10);
+    if (!position) {
+      return players.sort((a: any, b: any) => b.goals_scored - a.goals_scored).slice(0, 10);
+    } else {
+      if (position === "forward") position = "4";
+      else if (position === "midfielder") position = "3";
+      else if (position === "defender") position = "2";
+      else if (position === "goalkeeper") position = "1";
+      else position = "0";
+      return players
+        .filter((player: any) => player.element_type === parseInt(position as string))
+        .sort((a: any, b: any) => b.goals_scored - a.goals_scored)
+        .slice(0, 10);
+    }
   } catch (error) {
     console.error("Error fetching data from FPL:", error);
     throw error;
@@ -37,7 +57,7 @@ export const getTopScorers = async () => {
 
 // getTopScorers();
 
-export const getTopAssisters = async () => {
+export const getTopAssisters = async (position?: string) => {
   try {
     const response = await axios.get(FPL_PLAYER_URL);
     // console.log(response.data);
@@ -45,14 +65,26 @@ export const getTopAssisters = async () => {
     const players = response.data.elements;
     // console.log(players.sort((a: any, b: any) => b.total_points - a.total_points).slice(0, 10));
     // 선수 데이터를 응답으로 보냅니다.
-    return players.sort((a: any, b: any) => b.assists - a.assists).slice(0, 10);
+    if (!position) {
+      return players.sort((a: any, b: any) => b.assists - a.assists).slice(0, 10);
+    } else {
+      if (position === "forward") position = "4";
+      else if (position === "midfielder") position = "3";
+      else if (position === "defender") position = "2";
+      else if (position === "goalkeeper") position = "1";
+      else position = "0";
+      return players
+        .filter((player: any) => player.element_type === parseInt(position as string))
+        .sort((a: any, b: any) => b.assists - a.assists)
+        .slice(0, 10);
+    }
   } catch (error) {
     console.error("Error fetching data from FPL:", error);
     throw error;
   }
 };
 
-export const getTopBonusPointers = async () => {
+export const getTopBonusPointers = async (position?: string) => {
   try {
     const response = await axios.get(FPL_PLAYER_URL);
     // console.log(response.data);
@@ -60,14 +92,27 @@ export const getTopBonusPointers = async () => {
     const players = response.data.elements;
     // console.log(players.sort((a: any, b: any) => b.total_points - a.total_points).slice(0, 10));
     // 선수 데이터를 응답으로 보냅니다.
-    return players.sort((a: any, b: any) => b.bonus - a.bonus).slice(0, 10);
+
+    if (!position) {
+      return players.sort((a: any, b: any) => b.bonus - a.bonus).slice(0, 10);
+    } else {
+      if (position === "forward") position = "4";
+      else if (position === "midfielder") position = "3";
+      else if (position === "defender") position = "2";
+      else if (position === "goalkeeper") position = "1";
+      else position = "0";
+      return players
+        .filter((player: any) => player.element_type === parseInt(position as string))
+        .sort((a: any, b: any) => b.bonus - a.bonus)
+        .slice(0, 10);
+    }
   } catch (error) {
     console.error("Error fetching data from FPL:", error);
     throw error;
   }
 };
 
-export const getTopTransfersIn = async () => {
+export const getTopTransfersIn = async (position?: string) => {
   try {
     const response = await axios.get(FPL_PLAYER_URL);
     // console.log(response.data);
@@ -75,14 +120,27 @@ export const getTopTransfersIn = async () => {
     const players = response.data.elements;
     // console.log(players.sort((a: any, b: any) => b.total_points - a.total_points).slice(0, 10));
     // 선수 데이터를 응답으로 보냅니다.
-    return players.sort((a: any, b: any) => b.transfers_in_event - a.transfers_in_event).slice(0, 10);
+
+    if (!position) {
+      return players.sort((a: any, b: any) => b.transfers_in_event - a.transfers_in_event).slice(0, 10);
+    } else {
+      if (position === "forward") position = "4";
+      else if (position === "midfielder") position = "3";
+      else if (position === "defender") position = "2";
+      else if (position === "goalkeeper") position = "1";
+      else position = "0";
+      return players
+        .filter((player: any) => player.element_type === parseInt(position as string))
+        .sort((a: any, b: any) => b.transfers_in_event - a.transfers_in_event)
+        .slice(0, 10);
+    }
   } catch (error) {
     console.error("Error fetching data from FPL:", error);
     throw error;
   }
 };
 
-export const getTopTransfersOut = async () => {
+export const getTopTransfersOut = async (position?: string) => {
   try {
     const response = await axios.get(FPL_PLAYER_URL);
     // console.log(response.data);
@@ -90,7 +148,19 @@ export const getTopTransfersOut = async () => {
     const players = response.data.elements;
     // console.log(players.sort((a: any, b: any) => b.total_points - a.total_points).slice(0, 10));
     // 선수 데이터를 응답으로 보냅니다.
-    return players.sort((a: any, b: any) => b.transfers_out_event - a.transfers_out_event).slice(0, 10);
+    if (!position) {
+      return players.sort((a: any, b: any) => b.transfers_out_event - a.transfers_out_event).slice(0, 10);
+    } else {
+      if (position === "forward") position = "4";
+      else if (position === "midfielder") position = "3";
+      else if (position === "defender") position = "2";
+      else if (position === "goalkeeper") position = "1";
+      else position = "0";
+      return players
+        .filter((player: any) => player.element_type === parseInt(position as string))
+        .sort((a: any, b: any) => b.transfers_out_event - a.transfers_out_event)
+        .slice(0, 10);
+    }
   } catch (error) {
     console.error("Error fetching data from FPL:", error);
     throw error;
