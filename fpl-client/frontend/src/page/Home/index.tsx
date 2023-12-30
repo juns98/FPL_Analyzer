@@ -132,7 +132,7 @@ function Home() {
       </ButtonContainer>
       <BoxContainer>
         <Box>
-          <h3>Top Pointers</h3>
+          <h3>Most Points</h3>
           {topPointer.length > 0
             ? topPointer.map((data: any) => {
                 return innerData(data, data.total_points);
