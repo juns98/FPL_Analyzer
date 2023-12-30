@@ -47,8 +47,14 @@ app.get("/players", async (req: Request, res: Response) => {
 app.get("/top-players/:option", async (req: Request, res: Response) => {
   try {
     const option: string = req.params.option;
+    const position: string | undefined = (req.query.position)?.toString();
     if (option === "pointers") {
-      const players = await getTopPointers();
+      let players;
+      if (!position) {
+         players = await getTopPointers();
+      } else {
+         players = await getTopPointers(position);
+      }
       return res.json(players);
     } else if (option === "scorers") {
       const players = await getTopScorers();

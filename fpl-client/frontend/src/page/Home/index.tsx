@@ -78,7 +78,7 @@ function Home() {
             : null}
         </Box>
         <Box>
-          <h3>Top Assister</h3>
+          <h3>Most Assists</h3>
           {topAssister.length > 0
             ? topAssister.map((data: any) => {
                 return innerData(data, data.assists);

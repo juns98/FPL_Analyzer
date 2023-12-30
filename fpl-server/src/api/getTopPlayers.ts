@@ -1,7 +1,7 @@
 import axios from "axios";
 import { FPL_PLAYER_URL } from "../common/url";
 
-export const getTopPointers = async () => {
+export const getTopPointers = async (position?: string) => {
   try {
     const response = await axios.get(FPL_PLAYER_URL);
     // console.log(response.data);
@@ -9,7 +9,11 @@ export const getTopPointers = async () => {
     const players = response.data.elements;
     // console.log(players.sort((a: any, b: any) => b.total_points - a.total_points).slice(0, 10));
     // 선수 데이터를 응답으로 보냅니다.
-    return players.sort((a: any, b: any) => b.total_points - a.total_points).slice(0, 10);
+    if (!position) {
+      return players.sort((a: any, b: any) => b.total_points - a.total_points).slice(0, 10);
+    } else {
+  
+    }
   } catch (error) {
     console.error("Error fetching data from FPL:", error);
     throw error;
